@@ -1,6 +1,4 @@
 Changes
-Interfaces.pm
-Interfaces.pm.orig
 lib/Net/SNMP/Interfaces.pm
 lib/Net/SNMP/Interfaces/Details.pm
 Makefile.PL
@@ -9,3 +7,4 @@ patch
 README
 test.pl
 ytr
+META.yml                                Module meta-data (added by MakeMaker)
