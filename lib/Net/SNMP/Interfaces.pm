@@ -171,8 +171,9 @@ sub new
   {
      if ( $self->{_raise} )
      {
+       $Net::SNMP::Interfaces::error = $session->error;
        $session->close;
-       croak sprintf("%s: %s",__PACKAGE__, $session->error);
+       croak sprintf("%s: %s",__PACKAGE__, $Net::SNMP::Interfaces::error);
      }
      else
      {
