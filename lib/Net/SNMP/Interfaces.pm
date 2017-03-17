@@ -138,12 +138,14 @@ sub new
   $self->{_raise}     = $args{RaiseError} || 0;
 
 
-  my ($session, $error) = Net::SNMP->session(
-                                              -hostname  => $self->{_hostname},
-                                              -community => $self->{_community},
-                                              -port      => $self->{_port},
-                                              -version   => $self->{_version},
-                                            );
+  my ($session, $error) = defined $args{Session}
+                          ? $args{Session}
+                          : Net::SNMP->session(
+                                                -hostname  => $self->{_hostname},
+                                                -community => $self->{_community},
+                                                -port      => $self->{_port},
+                                                -version   => $self->{_version},
+                                              );
 
   if (!defined($session)) 
   {
@@ -169,8 +171,9 @@ sub new
   {
      if ( $self->{_raise} )
      {
+       $Net::SNMP::Interfaces::error = $session->error;
        $session->close;
-       croak sprintf("%s: %s",__PACKAGE__, $session->error);
+       croak sprintf("%s: %s",__PACKAGE__, $Net::SNMP::Interfaces::error);
      }
      else
      {
